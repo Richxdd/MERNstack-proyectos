@@ -21,8 +21,6 @@ const NuevaCuenta = () => {
 
     const handleSubmit = e =>{
         e.preventDefault()
-
-
     }
 
     return (
