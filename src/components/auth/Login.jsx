@@ -1,23 +1,23 @@
-import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
 
-    const [usuario,setUsuario] = useState({
-        email:'',
-        password:''
+    const [usuario, setUsuario] = useState({
+        email: '',
+        password: ''
     })
 
-    const {email,password} = usuario
+    const { email, password } = usuario
 
-    const onChange = e => { 
+    const onChange = e => {
         setUsuario({
             ...usuario,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
-    const handleSubmit = e =>{
+    const handleSubmit = e => {
         e.preventDefault()
 
     }
@@ -40,11 +40,14 @@ const Login = () => {
                         />
                     </div>
                     <div className='campo-form'>
-                        <input type='submit' className='btn btn-primario btn-block' value='Iniciar Sesión'/>
+                        <input type='submit' className='btn btn-primario btn-block' value='Iniciar Sesión' />
                     </div>
                 </form>
                 <Link to='/nueva-cuenta' className='enlace-cuenta center'>
                     Registrarse
+                </Link>
+                <Link to='/proyectos' className='enlace-cuenta center'>
+                    entrar
                 </Link>
             </div>
         </div>
