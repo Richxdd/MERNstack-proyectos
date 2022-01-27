@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react'
-import ProyectoContext from '../../context/Proyectos/ProyectoContext'
+import proyectoContext from '../../context/Proyectos/proyectoContext'
 
 const NuevoProyecto = () => {
 
     //Obtener el state del formulario
-    const proyectosContext = useContext(ProyectoContext)
+    const proyectosContext = useContext(proyectoContext)
     const { formulario, errorform, mostrarFormulario, agregarProyecto, mostrarError } = proyectosContext
 
     const [proyecto, guardarProyecto] = useState({
