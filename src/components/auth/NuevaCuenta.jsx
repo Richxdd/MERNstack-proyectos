@@ -1,7 +1,27 @@
-import { useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import AlertaContext from '../../context/alertas/alertaContext'
+import AuthContext from '../../context/auth/authContext'
+import { useNavigate } from 'react-router-dom'
 
 const NuevaCuenta = () => {
+  const navigate = useNavigate()
+  const alertaContext = useContext(AlertaContext)
+  const { alerta, mostrarAlerta } = alertaContext
+
+  const authContext = useContext(AuthContext)
+  const { registrarUsuario, mensaje, auth } = authContext
+
+  //en caso que el usuario sea auth o duplicado
+  useEffect(() => {
+    if (auth) {
+      navigate('/proyectos')
+    }
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria)
+    }
+  }, [mensaje, auth])
+
   const [usuario, setUsuario] = useState({
     nombre: '',
     email: '',
@@ -20,10 +40,35 @@ const NuevaCuenta = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    //validar que no haya  campos vacios
+    if (
+      nombre.trim() === '' ||
+      email.trim() === '' ||
+      password.trim() === '' ||
+      confirmar.trim() === ''
+    ) {
+      mostrarAlerta('Todos los campos son obligatorios', 'alerta-error')
+      return
+    }
+
+    //password minimo 6 letras
+    if (password.length < 6) {
+      mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error')
+      return
+    }
+    //los 2 password iguales
+    if (password !== confirmar) {
+      mostrarAlerta('Los password no son iguales', 'alerta-error')
+      return
+    }
+    //pasarlo al action
+    registrarUsuario({ nombre, email, password })
   }
 
   return (
     <div className="form-usuario">
+      {alerta ? <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div> : null}
       <div className="contenedor-form sombra-dark">
         <h1>Registrarse</h1>
         <form onSubmit={handleSubmit}>
