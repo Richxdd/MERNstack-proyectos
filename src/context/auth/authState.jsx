@@ -17,7 +17,8 @@ const AuthState = ({ children }) => {
     token: localStorage.getItem('token'),
     auth: null,
     usuario: null,
-    mensaje: null
+    mensaje: null,
+    cargando: true
   }
 
   const [state, dispatch] = useReducer(AuthReducer, initialState)
@@ -86,6 +87,12 @@ const AuthState = ({ children }) => {
       })
     }
   }
+  //cierra la sesion del usuario
+  const cerrarSesion = () => {
+    dispatch({
+      type: CERRAR_SESION
+    })
+  }
   return (
     <AuthContext.Provider
       value={{
@@ -93,8 +100,11 @@ const AuthState = ({ children }) => {
         auth: state.auth,
         usuario: state.usuario,
         mensaje: state.mensaje,
+        cargando: state.cargando,
         registrarUsuario,
-        iniciarSesion
+        iniciarSesion,
+        usuarioAuth,
+        cerrarSesion
       }}>
       {children}
     </AuthContext.Provider>
