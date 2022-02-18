@@ -10,6 +10,7 @@ import {
   CERRAR_SESION
 } from '../../types'
 import clienteAxios from '../../config/axios'
+import tokenAuth from '../../config/token'
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -30,6 +31,8 @@ const AuthState = ({ children }) => {
         type: REGISTRO_EXITOSO,
         payload: res.data
       })
+      //obtener el usuario
+      usuarioAuth()
     } catch (error) {
       const alerta = {
         msg: error.response.data.msg,
@@ -41,6 +44,48 @@ const AuthState = ({ children }) => {
       })
     }
   }
+
+  //Retorna el usuario auth
+  const usuarioAuth = async () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      //Todo funcion para enviar el token por headers
+      tokenAuth(token)
+    }
+    try {
+      const res = await clienteAxios.get('/api/auth')
+      dispatch({
+        type: OBTENER_USUARIO,
+        payload: res.data.usuario
+      })
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: LOGIN_ERROR
+      })
+    }
+  }
+  //cuando el usuario hace login
+  const iniciarSesion = async (datos) => {
+    try {
+      const res = await clienteAxios.post('/api/auth', datos)
+      dispatch({
+        type: LOGIN_EXITOSO,
+        payload: res.data
+      })
+      //obtener el usuario
+      usuarioAuth()
+    } catch (error) {
+      const alerta = {
+        msg: error.response.data.msg,
+        categoria: 'alerta-error'
+      }
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: alerta
+      })
+    }
+  }
   return (
     <AuthContext.Provider
       value={{
@@ -48,7 +93,8 @@ const AuthState = ({ children }) => {
         auth: state.auth,
         usuario: state.usuario,
         mensaje: state.mensaje,
-        registrarUsuario
+        registrarUsuario,
+        iniciarSesion
       }}>
       {children}
     </AuthContext.Provider>
