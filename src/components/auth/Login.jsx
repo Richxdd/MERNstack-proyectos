@@ -84,9 +84,6 @@ const Login = () => {
         <Link to="/nueva-cuenta" className="enlace-cuenta center">
           Registrarse
         </Link>
-        <Link to="/proyectos" className="enlace-cuenta center">
-          entrar
-        </Link>
       </div>
     </div>
   )
