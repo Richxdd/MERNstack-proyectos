@@ -8,6 +8,7 @@ const Barra = () => {
 
   useEffect(() => {
     usuarioAuth()
+    //eslint-disable-next-line
   }, [])
   return (
     <header className="app-header">

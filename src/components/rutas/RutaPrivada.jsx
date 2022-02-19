@@ -8,6 +8,7 @@ const RutaPrivada = ({ Component }) => {
 
   useEffect(() => {
     usuarioAuth()
+    //eslint-disable-next-line
   }, [])
 
   return !auth && !cargando ? <Navigate to="/" /> : <Component />

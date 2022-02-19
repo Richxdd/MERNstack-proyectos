@@ -20,6 +20,7 @@ const NuevaCuenta = () => {
     if (mensaje) {
       mostrarAlerta(mensaje.msg, mensaje.categoria)
     }
+    //eslint-disable-next-line
   }, [mensaje, auth])
 
   const [usuario, setUsuario] = useState({

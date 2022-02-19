@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Tarea from './Tarea'
 import proyectoContext from '../../context/Proyectos/proyectoContext'
 import tareaContext from '../../context/tareas/tareaContext'
@@ -18,7 +18,7 @@ const ListadoTarea = () => {
   const [proyectoActual] = proyecto
 
   const onClickEliminar = () => {
-    eliminarProyecto(proyectoActual.id)
+    eliminarProyecto(proyectoActual._id)
   }
 
   return (
@@ -32,17 +32,14 @@ const ListadoTarea = () => {
         ) : (
           <TransitionGroup>
             {tareasproyecto.map((tarea) => (
-              <CSSTransition key={tarea.id} timeout={500} classNames="tarea">
+              <CSSTransition key={tarea._id} timeout={500} classNames="tarea">
                 <Tarea tarea={tarea} />
               </CSSTransition>
             ))}
           </TransitionGroup>
         )}
       </ul>
-      <button
-        type="button"
-        className="btn btn-eliminar"
-        onClick={onClickEliminar}>
+      <button type="button" className="btn btn-eliminar" onClick={onClickEliminar}>
         Eliminar Proyecto &times;
       </button>
     </>
